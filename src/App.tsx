@@ -261,7 +261,6 @@ export default function App() {
       ];
 
       // ── Pull real registered users into the pool ─────────────────────────
-      const { getAllUsers } = require('./utils/userStorage');
       const realUsers = (getAllUsers() as any[])
         .filter((u: any) => u.id !== currentUser.id)
         .map((u: any) => ({
