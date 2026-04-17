@@ -97,7 +97,7 @@ M.S. Cybersecurity · Montclair State University
 
 © 2026 Aboubacar Sidick Meite (ApollonIUGB77) — All Rights Reserved
 
-  This is a code bundle for Msu Global Buddy+ App. The original project is available at https://www.figma.com/design/uBNnACtVg2NJDTHg0TGGCB/Msu-Global-Buddy--App.
+  This is a code bundle for Msu Global Buddy+ App. The original project is available if needed.
 
   ## Running the code
 
