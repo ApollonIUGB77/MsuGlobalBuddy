@@ -233,133 +233,101 @@ export default function App() {
 
   const handleFindBuddy = () => {
     if (!currentUser) return;
-    
     setCurrentScreen('findBuddy');
-    
-    // Simulate finding a buddy based on user preferences
+
     setTimeout(() => {
-      // Array of diverse buddy profiles
-      const buddyProfiles = [
-        {
-          name: 'Sarah Johnson',
-          program: 'Computer Science',
-          level: 'Graduate Student',
-          country: 'Canada',
-          languages: ['English', 'French'],
-          interests: ['Coding', 'Gaming', 'Music', 'Technology'],
-          bio: "Hey! I'm a CS grad student passionate about web development and AI. Love gaming in my free time and always up for coffee chats about tech!",
-        },
-        {
-          name: 'Miguel Rodriguez',
-          program: 'Business Administration',
-          level: 'Undergraduate',
-          country: 'Spain',
-          languages: ['Spanish', 'English', 'French'],
-          interests: ['Sports', 'Travel', 'Photography', 'Music'],
-          bio: "International student from Madrid! Love exploring new places, playing soccer, and meeting people from different cultures. Let's connect!",
-        },
-        {
-          name: 'Yuki Tanaka',
-          program: 'Engineering',
-          level: 'Graduate Student',
-          country: 'Japan',
-          languages: ['Japanese', 'English'],
-          interests: ['Technology', 'Gaming', 'Anime', 'Cooking'],
-          bio: "Engineering student who loves building things and playing video games. Always happy to help with tech stuff or grab ramen together!",
-        },
-        {
-          name: 'Emma Wilson',
-          program: 'Psychology',
-          level: 'Undergraduate',
-          country: 'United Kingdom',
-          languages: ['English', 'German'],
-          interests: ['Reading', 'Music', 'Travel', 'Fitness'],
-          bio: "Psychology major with a love for books and good coffee. New to the area and looking forward to making friends and exploring campus!",
-        },
-        {
-          name: 'Ahmed Hassan',
-          program: 'Data Science',
-          level: 'Graduate Student',
-          country: 'Egypt',
-          languages: ['Arabic', 'English', 'French'],
-          interests: ['Technology', 'Sports', 'Music', 'Coding'],
-          bio: "Data science enthusiast who loves working on AI projects. Also into basketball and Middle Eastern cuisine. Let's connect!",
-        },
+      // ── Extended diverse buddy profiles pool ──────────────────────────────
+      const staticProfiles = [
+        { name: 'Sarah Johnson',      program: 'Computer Science',        level: 'Graduate Student',    country: 'Canada',        languages: ['English', 'French'],              interests: ['Coding', 'Gaming', 'Music', 'Technology'],           bio: "CS grad student passionate about web dev & AI. Always up for coffee chats about tech!" },
+        { name: 'Miguel Rodriguez',   program: 'Business Administration', level: 'Undergraduate',       country: 'Spain',         languages: ['Spanish', 'English', 'French'],    interests: ['Sports', 'Travel', 'Photography', 'Music'],           bio: "International student from Madrid. Love soccer, exploring and meeting people from all cultures!" },
+        { name: 'Yuki Tanaka',        program: 'Engineering',             level: 'Graduate Student',    country: 'Japan',         languages: ['Japanese', 'English'],             interests: ['Technology', 'Gaming', 'Cooking', 'Music'],           bio: "Engineering student who loves building things. Happy to help with tech or grab ramen!" },
+        { name: 'Emma Wilson',        program: 'Psychology',              level: 'Undergraduate',       country: 'United Kingdom', languages: ['English', 'German'],              interests: ['Reading', 'Music', 'Travel', 'Fitness'],              bio: "Psych major with a love for books and coffee. Looking forward to making friends on campus!" },
+        { name: 'Ahmed Hassan',       program: 'Data Science',            level: 'Graduate Student',    country: 'Egypt',         languages: ['Arabic', 'English', 'French'],    interests: ['Technology', 'Sports', 'Music', 'Coding'],            bio: "Data science enthusiast working on AI projects. Also into basketball — let's connect!" },
+        { name: 'Amara Diallo',       program: 'Public Health',           level: 'Graduate Student',    country: 'Senegal',       languages: ['French', 'English', 'Wolof'],     interests: ['Sports', 'Travel', 'Cooking', 'Reading'],             bio: "Public health student from Dakar. Passionate about global health and African culture!" },
+        { name: 'Lin Wei',            program: 'Computer Science',        level: 'Graduate Student',    country: 'China',         languages: ['Chinese', 'English'],             interests: ['Coding', 'Technology', 'Gaming', 'Photography'],      bio: "CS student specializing in machine learning. Love photography and board games on weekends!" },
+        { name: 'Fatima Al-Rashidi',  program: 'Cybersecurity',           level: 'Graduate Student',    country: 'Saudi Arabia',  languages: ['Arabic', 'English'],             interests: ['Technology', 'Coding', 'Reading', 'Travel'],          bio: "Cybersecurity student passionate about ethical hacking and network defense. Tea > coffee!" },
+        { name: 'Carlos Mendoza',     program: 'Electrical Engineering',  level: 'Undergraduate',       country: 'Mexico',        languages: ['Spanish', 'English'],             interests: ['Technology', 'Music', 'Sports', 'Cooking'],           bio: "EE student from Guadalajara. Play guitar, love hiking and always happy to help with circuits!" },
+        { name: 'Priya Patel',        program: 'Information Technology',  level: 'Graduate Student',    country: 'India',         languages: ['Hindi', 'English'],               interests: ['Coding', 'Technology', 'Cooking', 'Fitness'],         bio: "IT grad student interested in cloud computing. Big foodie — love cooking Indian dishes!" },
+        { name: 'Kofi Asante',        program: 'Business Administration', level: 'Graduate Student',    country: 'Ghana',         languages: ['English', 'Twi', 'French'],       interests: ['Sports', 'Music', 'Travel', 'Photography'],           bio: "MBA student from Accra. Passionate about entrepreneurship in Africa. Football & Afrobeats!" },
+        { name: 'Mei-Ling Chen',      program: 'Data Science',            level: 'Undergraduate',       country: 'Taiwan',        languages: ['Chinese', 'English', 'Japanese'], interests: ['Technology', 'Reading', 'Photography', 'Music'],       bio: "Data science undergrad passionate about visualization and statistics. Love bubble tea!" },
+        { name: 'Ivan Petrov',        program: 'Mathematics',             level: 'Graduate Student',    country: 'Russia',        languages: ['Russian', 'English'],             interests: ['Reading', 'Gaming', 'Coding', 'Fitness'],             bio: "Math PhD student who loves chess, algorithms, and long runs. Always up for intellectual talks!" },
+        { name: 'Aisha Mwangi',       program: 'Public Policy',           level: 'Graduate Student',    country: 'Kenya',         languages: ['Swahili', 'English', 'French'],   interests: ['Travel', 'Reading', 'Music', 'Sports'],               bio: "Policy student from Nairobi focused on sustainable development. Love hiking and African lit!" },
+        { name: 'Diego Ferreira',     program: 'Computer Science',        level: 'Graduate Student',    country: 'Brazil',        languages: ['Portuguese', 'English', 'Spanish'],interests: ['Coding', 'Sports', 'Music', 'Gaming'],               bio: "CS student from São Paulo into full-stack development. Passionate about football and samba!" },
+        { name: 'Hana Kim',           program: 'Psychology',              level: 'Undergraduate',       country: 'South Korea',   languages: ['Korean', 'English'],             interests: ['Music', 'Fitness', 'Reading', 'Photography'],         bio: "Psych undergrad from Seoul. K-pop enthusiast, yoga lover, and always down for a good book!" },
+        { name: 'Tariq Benali',       program: 'Engineering',             level: 'Graduate Student',    country: 'Morocco',       languages: ['Arabic', 'French', 'English'],    interests: ['Technology', 'Sports', 'Travel', 'Cooking'],          bio: "Mechanical engineer from Casablanca. Football crazy, love couscous and learning new cultures!" },
+        { name: 'Anastasia Volkova',  program: 'Cybersecurity',           level: 'Graduate Student',    country: 'Ukraine',       languages: ['Ukrainian', 'Russian', 'English'], interests: ['Coding', 'Technology', 'Reading', 'Fitness'],         bio: "Cybersecurity student focused on malware analysis. Love running, sci-fi books and CTF challenges!" },
+        { name: 'Ravi Subramaniam',   program: 'Data Science',            level: 'Graduate Student',    country: 'India',         languages: ['Tamil', 'English', 'Hindi'],      interests: ['Technology', 'Coding', 'Music', 'Travel'],            bio: "Data scientist in training. Classical music lover, cricket fan, always exploring new datasets!" },
+        { name: 'Sophie Lefebvre',    program: 'Business Administration', level: 'Undergraduate',       country: 'France',        languages: ['French', 'English', 'Spanish'],   interests: ['Travel', 'Photography', 'Music', 'Cooking'],          bio: "Business student from Lyon. Passionate about sustainable fashion and exploring new cuisines!" },
       ];
 
-      // Calculate match scores based on user's languages and interests
+      // ── Pull real registered users into the pool ─────────────────────────
+      const { getAllUsers } = require('./utils/userStorage');
+      const realUsers = (getAllUsers() as any[])
+        .filter((u: any) => u.id !== currentUser.id)
+        .map((u: any) => ({
+          name: `${u.firstName} ${u.lastName}`,
+          program: u.major || 'General Studies',
+          level: u.year || 'Student',
+          country: u.country || 'International',
+          languages: u.languages || ['English'],
+          interests: u.interests || [],
+          bio: `${u.major || 'Student'} at Montclair State University. ${u.country ? `From ${u.country}.` : ''}`,
+          isRealUser: true,
+        }));
+
+      const allProfiles = [...staticProfiles, ...realUsers];
+
+      // ── Scoring algorithm ────────────────────────────────────────────────
       const userLanguages = currentUser.languages || [];
       const userInterests = currentUser.interests || [];
-      
-      // Get already matched buddies to avoid duplicates
+      const userMajor     = (currentUser as any).major || '';
       const alreadyMatched = getUserMatchedBuddies(currentUser.id);
-      
-      const matchedBuddies = buddyProfiles.map(buddy => {
-        // Find common languages
-        const commonLanguages = buddy.languages.filter(lang => 
-          userLanguages.includes(lang)
-        );
-        
-        // Find common interests
-        const commonInterests = buddy.interests.filter(interest => 
-          userInterests.includes(interest)
-        );
-        
-        // Calculate match score (0-100)
-        const languageWeight = 0.4;
-        const interestWeight = 0.6;
-        
-        const languageScore = userLanguages.length > 0 && buddy.languages.length > 0
-          ? (commonLanguages.length / Math.max(userLanguages.length, buddy.languages.length)) * 100 
-          : 0;
-          
-        const interestScore = userInterests.length > 0 && buddy.interests.length > 0
-          ? (commonInterests.length / Math.max(userInterests.length, buddy.interests.length)) * 100
-          : 0;
-        
-        const matchScore = Math.round(
-          languageWeight * languageScore + interestWeight * interestScore
-        );
-        
-        return {
-          ...buddy,
-          matchScore,
-          commonLanguages,
-          commonInterests
-        };
-      });
 
-      // Filter out already matched buddies
-      const availableBuddies = matchedBuddies.filter(buddy => 
-        !alreadyMatched.includes(buddy.name)
-      );
-      
-      // Filter buddies with match score >= 50% and sort by match score
-      let validMatches = availableBuddies
-        .filter(buddy => buddy.matchScore >= 50)
+      const scored = allProfiles
+        .filter(b => !alreadyMatched.includes(b.name))
+        .map(buddy => {
+          const commonLanguages = buddy.languages.filter((l: string) => userLanguages.includes(l));
+          const commonInterests = buddy.interests.filter((i: string) => userInterests.includes(i));
+
+          const langScore     = userLanguages.length > 0
+            ? (commonLanguages.length / Math.max(userLanguages.length, buddy.languages.length)) * 100
+            : 30; // default if no languages set
+
+          const interestScore = userInterests.length > 0
+            ? (commonInterests.length / Math.max(userInterests.length, buddy.interests.length)) * 100
+            : 20;
+
+          const majorScore = userMajor && buddy.program
+            ? (buddy.program.toLowerCase().includes(userMajor.toLowerCase()) ||
+               userMajor.toLowerCase().includes(buddy.program.toLowerCase()) ? 100 : 0)
+            : 0;
+
+          // Weights: interests 45%, languages 35%, major 20%
+          const matchScore = Math.round(0.35 * langScore + 0.45 * interestScore + 0.20 * majorScore);
+
+          return { ...buddy, matchScore, commonLanguages, commonInterests };
+        });
+
+      // Sort by score, take best matches (threshold lowered to 25% for richer pool)
+      const validMatches = scored
+        .filter(b => b.matchScore >= 25)
         .sort((a, b) => b.matchScore - a.matchScore);
-      
-      // Check if we have valid matches
+
       if (validMatches.length === 0) {
-        // No match found (either all buddies matched or score < 50%)
-        setCurrentScreen('noMatch');
+        // If still nothing, pick any unmatched profile
+        const fallback = scored.sort((a, b) => b.matchScore - a.matchScore)[0];
+        if (!fallback) { setCurrentScreen('noMatch'); return; }
+        addMatchedBuddy(currentUser.id, fallback.name);
+        createMatchNotification(currentUser.id, fallback.name, fallback);
+        setCurrentBuddy(fallback);
+        setCurrentScreen('buddyFound');
         return;
       }
-      
-      // Select the best match
+
       const selectedBuddy = validMatches[0];
-      
-      // Add to matched buddies
       addMatchedBuddy(currentUser.id, selectedBuddy.name);
-      
-      // Create notification for the new match
       createMatchNotification(currentUser.id, selectedBuddy.name, selectedBuddy);
-      
-      // Mark that user is no longer first login after finding first buddy
-      if (isFirstLogin) {
-        setIsFirstLogin(false);
-      }
-      
+      if (isFirstLogin) setIsFirstLogin(false);
       setCurrentBuddy(selectedBuddy);
       setCurrentScreen('buddyFound');
     }, 3000);
