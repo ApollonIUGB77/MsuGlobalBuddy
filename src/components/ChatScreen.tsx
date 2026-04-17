@@ -21,63 +21,48 @@ interface Message {
   status?: 'sent' | 'delivered' | 'read';
 }
 
+// ── Helpers for message persistence ──────────────────────────────────────────
+const getChatKey = (userId: string | undefined, buddy: string) =>
+  `chat_${userId ?? 'guest'}_${buddy.replace(/\s+/g, '_').toLowerCase()}`;
+
+const INITIAL_MESSAGES: Message[] = [
+  { id: 1, text: "Hey! I saw we got matched. I'm really excited to meet you! 😊", sender: 'buddy', timestamp: '10:30 AM', status: 'read' },
+  { id: 2, text: "Hi! Yes, I'm excited too! I saw we have a lot in common.", sender: 'me', timestamp: '10:32 AM', status: 'read' },
+  { id: 3, text: "Absolutely! I noticed you're interested in coding. What languages do you work with?", sender: 'buddy', timestamp: '10:33 AM', status: 'read' },
+  { id: 4, text: "I mainly work with JavaScript and Python. Also learning React right now. What about you?", sender: 'me', timestamp: '10:35 AM', status: 'read' },
+  { id: 5, text: "Nice! I'm into Python and Java. We should work on a project together sometime!", sender: 'buddy', timestamp: '10:36 AM', status: 'read' },
+  { id: 6, text: "That would be awesome! Are you free this weekend to meet up?", sender: 'me', timestamp: '10:38 AM', status: 'read' },
+  { id: 7, text: "Yeah! How about Saturday afternoon? We could grab coffee on campus.", sender: 'buddy', timestamp: '10:40 AM', status: 'read' },
+];
+
 export function ChatScreen({ onBack, buddyName, currentUserId }: ChatScreenProps) {
+  const chatKey = getChatKey(currentUserId, buddyName);
+
   const [message, setMessage] = useState('');
   const [showReportDialog, setShowReportDialog] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 1,
-      text: "Hey! I saw we got matched. I'm really excited to meet you! 😊",
-      sender: 'buddy',
-      timestamp: '10:30 AM',
-      status: 'read',
-    },
-    {
-      id: 2,
-      text: "Hi! Yes, I'm excited too! I saw we have a lot in common.",
-      sender: 'me',
-      timestamp: '10:32 AM',
-      status: 'read',
-    },
-    {
-      id: 3,
-      text: "Absolutely! I noticed you're interested in coding. What languages do you work with?",
-      sender: 'buddy',
-      timestamp: '10:33 AM',
-      status: 'read',
-    },
-    {
-      id: 4,
-      text: "I mainly work with JavaScript and Python. Also learning React right now. What about you?",
-      sender: 'me',
-      timestamp: '10:35 AM',
-      status: 'read',
-    },
-    {
-      id: 5,
-      text: "Nice! I'm into Python and Java. We should work on a project together sometime!",
-      sender: 'buddy',
-      timestamp: '10:36 AM',
-      status: 'read',
-    },
-    {
-      id: 6,
-      text: "That would be awesome! Are you free this weekend to meet up?",
-      sender: 'me',
-      timestamp: '10:38 AM',
-      status: 'read',
-    },
-    {
-      id: 7,
-      text: "Yeah! How about Saturday afternoon? We could grab coffee on campus.",
-      sender: 'buddy',
-      timestamp: '10:40 AM',
-      status: 'read',
-    },
-  ]);
+
+  // ── Load messages from localStorage (falls back to initial messages) ──────
+  const [messages, setMessages] = useState<Message[]>(() => {
+    try {
+      const saved = localStorage.getItem(chatKey);
+      return saved ? (JSON.parse(saved) as Message[]) : INITIAL_MESSAGES;
+    } catch {
+      return INITIAL_MESSAGES;
+    }
+  });
+
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // ── Persist messages to localStorage whenever they change ────────────────
+  useEffect(() => {
+    try {
+      localStorage.setItem(chatKey, JSON.stringify(messages));
+    } catch {
+      // localStorage quota exceeded — silently ignore
+    }
+  }, [messages, chatKey]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
